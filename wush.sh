@@ -60,12 +60,14 @@ if ! $(isYes $continue); then
   exit 0
 fi
 
+repository_name="$cohort_id"-"$session"
+
 # Commit everything and upload the repository
 git add . && git commit -m "initial commit"
-gh repo create -s=. --push --public --remote=origin neuefische-web-demos/"$cohort_id"-"$session"
+gh repo create -s=. --push --public --remote=origin neuefische-web-demos/"$repository_name"
 
 if [ $? -eq 0 ]; then
-  echo -e "\e[32mRepository created: https://github.com/neuefische-web-demos/$1\e[0m"
+  echo -e "\e[32mRepository created: https://github.com/neuefische-web-demos/$repository_name\e[0m"
 else
   echo -e "\e[31mFailed to create repository. Please check if 'gh' command is installed.\e[0m"
 fi
