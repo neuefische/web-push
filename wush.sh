@@ -6,7 +6,7 @@ session=$2
 
 # Interactive mode if no cohort id is provided
 if [ $# -lt 1 ]; then
-  echo -n "Enter cohort id (hh-test-24-1): "
+  echo -n "Enter cohort id (hh-test-24-1): " 
   read cohort_id
 fi
 
@@ -18,7 +18,7 @@ fi
 
 # Interactive mode if no session name is provided
 if [ $# -lt 2 ]; then
-  echo -n "Enter session name (shell-basics):"
+  echo -n "Enter session name (shell-basics): "
   read session
 fi
 
