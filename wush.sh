@@ -30,7 +30,7 @@ fi
 
 # Check if current folder is a git repository
 if [ ! -d ".git" ]; then
-  echo "This directory is not a git repository. Initialize one? [Y/n]: "
+  echo -n "This directory is not a git repository. Initialize one? [Y/n]: "
   read git_init
 
   if [ "$git_init" = 'n' || "$git_init" = 'no' ]; then
