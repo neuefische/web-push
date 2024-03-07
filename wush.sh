@@ -7,6 +7,15 @@ isYes() {
   fi
 }
 
+printError() {
+  echo -e "\e[31m$1\e[0m"
+}
+
+highlightText() {
+  echo -e "\e[32m$1\e[0m"
+}
+
+
 
 # Handle user inputs
 cohort_id=$1
@@ -20,7 +29,7 @@ if [ $# -lt 1 ]; then
 fi
 
 if [ "$cohort_id" = "" ]; then
-  echo "Error: You must provide a cohort id."
+  echo $(printError "Error: You must provide a cohort id.")
   exit 1
 fi
 
@@ -31,8 +40,8 @@ if [ $# -lt 2 ]; then
   read session
 fi
 
-if [ $session = '' ]; then
-  echo "Error: You must provide a session name."
+if [ "$session" = '' ]; then
+  echo $(printError "Error: You must provide a session name.")
   exit 1
 fi
 
@@ -43,16 +52,16 @@ if [ ! -d ".git" ]; then
   read git_init
 
   if ! $(isYes $git_init); then
-    echo "Error: This command needs to be executed in a git repository you want to upload."
+    echo $(printError "Error: This command needs to be executed in a git repository you want to upload.")
     exit 1
   fi
 
-  # git init
+  git init
 fi
 
 
 # Let user check for spelling mistakes
-echo -n "A new remote repository '$cohort_id-$session' will be created. Proceed? [Y/n]: "
+echo -n -e "\nA new remote repository $(highlightText "$cohort_id-$session") will be created. Proceed? [Y/n]: "
 read continue
 
 if ! $(isYes $continue); then
@@ -67,7 +76,8 @@ git add . && git commit -m "initial commit"
 gh repo create -s=. --push --public --remote=origin neuefische-web-demos/"$repository_name"
 
 if [ $? -eq 0 ]; then
-  echo -e "\e[32mRepository created: https://github.com/neuefische-web-demos/$repository_name\e[0m"
+  echo $(highligthText "Repository created: https://github.com/neuefische-web-demos/$repository_name")
 else
-  echo -e "\e[31mFailed to create repository. Please check if 'gh' command is installed.\e[0m"
+  echo $(printError "Failed to create repository. Please check if 'gh' command is installed.")
 fi
+
