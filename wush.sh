@@ -33,7 +33,7 @@ if [ ! -d ".git" ]; then
   echo -n "This directory is not a git repository. Initialize one? [Y/n]: "
   read git_init
 
-  if [ "$git_init" = 'n' || "$git_init" = 'no' ]; then
+  if [[ "$git_init" = 'n' || "$git_init" = 'no' ]]; then
     echo "Error: This command needs to be executed in a git repository you want to upload."
     exit 1
   fi
