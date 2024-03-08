@@ -6,16 +6,8 @@ function highlightText() {
   echo -e "\e[32m$1\e[0m"
 }
 
-function is_yes() {
-  if [[ $1 = '' || $1 = "y" || $1 = "Y" ]]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
 function confirm() {
-  valid_options=("y" "Y" "n" "N" "")
+  local valid_options=("y" "Y" "n" "N" "")
 
   is_valid_option() {
     local input=$1
@@ -28,12 +20,13 @@ function confirm() {
     return 1
   }
 
+  local user_input=-1
   while ! is_valid_option "$user_input"; do
     echo -n -e "$1"
     read user_input
   done
 
-  if is_yes $user_input; then
+  if [[ $user_input = '' || $user_input = "y" || $user_input = "Y" ]]; then
     return 0
   else
     return 1
@@ -92,20 +85,20 @@ if [ ! -d ".git" ]; then
     exit 1
   fi
 
-  git init
+  # git init
 fi
 
 repository_name="$cohort_id"-"$session"
 
 # Let user check for spelling mistakes
-if ! confirm "\nA new remote repository $(highlightText "$repository_name") will be created. Proceed? [Y/n]: "; then
+if ! confirm "A new remote repository $(highlightText "$repository_name") will be created. Proceed? [Y/n]: "; then
   echo "Abort..."
   exit 0
 fi
 
 # Commit everything and upload the repository
-git add . && git commit -m "initial commit"
-gh repo create -s=. --push --public --remote=origin neuefische-web-demos/"$repository_name"
+# git add . && git commit -m "initial commit"
+# gh repo create -s=. --push --public --remote=origin neuefische-web-demos/"$repository_name"
 
 if [ $? -eq 0 ]; then
   echo $(highlightText "Repository created: https://github.com/neuefische-web-demos/$repository_name")
