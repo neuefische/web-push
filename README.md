@@ -1,6 +1,6 @@
 # Wush - web-push
 
-**wush** - Create and upload a new GitHub repository for a session demo.
+**wush** - Create and upload a new GitHub repository for a session demo to the organisation **neuefische-web-demos**.
 
 ## Synopsis
 
@@ -63,6 +63,10 @@ The script checks if the current folder is a Git repository. If not, it asks the
 ### Create and Upload Git Repository
 
 The script then constructs a repository name using the cohort ID and session name. It prompts the user to confirm the creation of a new remote repository on GitHub. If confirmed, the script adds and commits all files to the Git repository and uses the GitHub CLI (`gh`) to create the repository on GitHub, pushing the initial commit.
+
+### Display the Link to the Repository
+
+After successfully uploading the repository the script displays the https link to the remote repository in the terminal.
 
 ## See also
 
