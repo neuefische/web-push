@@ -1,4 +1,61 @@
-source utils.sh
+function printError() {
+  echo -e "\e[31m$1\e[0m"
+}
+
+function highlightText() {
+  echo -e "\e[32m$1\e[0m"
+}
+
+function is_yes() {
+  if [[ $1 = '' || $1 = "y" || $1 = "Y" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+function confirm() {
+  valid_options=("y" "Y" "n" "N" "")
+
+  is_valid_option() {
+    local input=$1
+
+    for option in "${valid_options[@]}"; do
+      if [[ "$input" = "$option" ]]; then
+        return 0
+      fi
+    done
+    return 1
+  }
+
+  while ! is_valid_option "$user_input"; do
+    echo -n -e "$1"
+    read user_input
+  done
+
+  if is_yes $user_input; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+prompt_output=''
+function prompt() {
+  prompt_output=''
+
+  local user_input=""
+  while [[ $user_input = "" ]]; do
+    echo -n -e "$1"
+    read user_input
+  done
+
+  prompt_output=$user_input
+}
+
+# ----
+# START
+# ----
 
 # Handle user inputs
 cohort_id=$1
@@ -6,8 +63,9 @@ session=$2
 
 # Interactive mode if no cohort id is provided
 if [ $# -lt 1 ]; then
-  echo -n "Enter cohort id (hh-test-24-1): "
-  read cohort_id
+  test
+  prompt "Enter cohort id (hh-test-24-1): "
+  cohort_id="$prompt_output"
 fi
 
 if [ "$cohort_id" = "" ]; then
@@ -17,8 +75,8 @@ fi
 
 # Interactive mode if no session name is provided
 if [ $# -lt 2 ]; then
-  echo -n "Enter session name (shell-basics): "
-  read session
+  prompt "Enter session name (shell-basics): "
+  session="$prompt_output"
 fi
 
 if [ "$session" = '' ]; then
@@ -28,29 +86,26 @@ fi
 
 # Check if current folder is a git repository
 if [ ! -d ".git" ]; then
-  echo -n "This directory is not a git repository. Initialize one? [Y/n]: "
 
-  if ! confirm; then
+  if ! confirm "This directory is not a git repository. Initialize one? [Y/n]: "; then
     echo $(printError "Error: This command needs to be executed in a git repository you want to upload.")
     exit 1
   fi
 
-  # git init
+  git init
 fi
 
 repository_name="$cohort_id"-"$session"
 
 # Let user check for spelling mistakes
-echo -n -e "\nA new remote repository $(highlightText "$repository_name") will be created. Proceed? [Y/n]: "
-
-if ! confirm; then
+if ! confirm "\nA new remote repository $(highlightText "$repository_name") will be created. Proceed? [Y/n]: "; then
   echo "Abort..."
   exit 0
 fi
 
 # Commit everything and upload the repository
-# git add . && git commit -m "initial commit"
-# gh repo create -s=. --push --public --remote=origin neuefische-web-demos/"$repository_name"
+git add . && git commit -m "initial commit"
+gh repo create -s=. --push --public --remote=origin neuefische-web-demos/"$repository_name"
 
 if [ $? -eq 0 ]; then
   echo $(highlightText "Repository created: https://github.com/neuefische-web-demos/$repository_name")
