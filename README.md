@@ -4,11 +4,23 @@
 
 ## Synopsis
 
+Use this command in the root folder of the demo you want to upload:
+
 ```
 wush _[cohort_id]_ _[session]_
 ```
 
-# Examples
+## Installation
+
+Add this code to your `.zshrc` and restart the terminal:
+
+```bash
+function wush {
+  zsh <(curl -sSL "https://raw.githubusercontent.com/neuefische/web-push/main/wush.sh") $@
+}
+```
+
+## Examples
 
 Without any arguments:
 
@@ -62,4 +74,4 @@ This script was created by Felix Kirchhoff (@F-Kirchhoff).
 
 ## Reporting Bugs
 
-Report any issues or bugs on this GitHub repository.
+Report any issues or bugs as a ticket in this GitHub repository.
