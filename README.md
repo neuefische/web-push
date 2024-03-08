@@ -70,7 +70,7 @@ The script then constructs a repository name using the cohort ID and session nam
 
 ## Author
 
-This script was created by Felix Kirchhoff (@F-Kirchhoff).
+This script was created by [Marc Bendixen](https://github.com/marcbendixen) and [Felix Kirchhoff](https://github.com/f-kirchhoff).
 
 ## Reporting Bugs
 
