@@ -1,3 +1,7 @@
+# -----
+# Subroutines
+# -----
+
 function printError() {
   echo -e "\e[31m$1\e[0m"
 }
@@ -42,12 +46,12 @@ function prompt() {
     echo -n -e "$1"
     read user_input
   done
-
+  1=$user_input
   prompt_output=$user_input
 }
 
 # ----
-# START
+# Start
 # ----
 
 # Handle user inputs
