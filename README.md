@@ -20,6 +20,14 @@ function wush {
 }
 ```
 
+## Update/Reload
+
+If the script doesn't work or you want to force an update, use this command to reload the `.zshrc` and restart the terminal:
+
+```bash
+source ~/.zshrc
+```
+
 ## Examples
 
 Without any arguments:
