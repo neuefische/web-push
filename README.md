@@ -12,7 +12,7 @@ wush _[cohort_id]_ _[session]_
 
 ## Installation
 
-Add this code to your `.zshrc` and restart the terminal:
+Add this code to your `.zshrc` (or `.bashrc` if you are using Windows) and restart the terminal:
 
 ```bash
 function wush {
@@ -22,7 +22,7 @@ function wush {
 
 ## Update/Reload
 
-If the script doesn't work or you want to force an update, use this command to reload the `.zshrc` and restart the terminal:
+If the script doesn't work or you want to force an update, use this command to reload the `.zshrc`/`.bashrc`  and restart the terminal:
 
 ```bash
 source ~/.zshrc
